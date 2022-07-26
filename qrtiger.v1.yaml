@@ -1,0 +1,1822 @@
+openapi: 3.0.0
+info:
+  title: QRTIGER API
+  version: '1.0'
+  description: >-
+    Our custom QR code API offers a professional solution for brands that need
+    to have custom qr code templates with data tracking system, dynamic qr codes
+    or qr codes in bulk and have qr codes integrated in their CRM.
+
+
+    Our API and is available on 'Mashape' for any other questions you can always
+    'contact us' our API can be used world wide, if you need your QR codes
+    available in China, please [contact
+    us](https://www.qrcode-tiger.com/contact). We can also do customized QR code
+    for mobile payments.
+  contact:
+    name: QRTIGER
+    url: 'https://www.qrcode-tiger.com/contact'
+    email: it@qrtiger.com
+  termsOfService: 'https://www.qrcode-tiger.com/terms-and-conditions'
+servers:
+  - url: 'https://qrtiger.com'
+paths:
+  /api/qr/static:
+    parameters: []
+    post:
+      summary: Create Static QR Code
+      operationId: post-api-qr-static
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  data:
+                    type: string
+                    minLength: 1
+                  url:
+                    type: string
+                    minLength: 1
+                required:
+                  - data
+                  - url
+              examples:
+                Static QR Code Response:
+                  value:
+                    data: base 64 QR image data
+                    url: 1601477992984.png
+      description: Generate Static custom QR code
+      parameters:
+        - schema:
+            type: string
+            example: Bearer 29c7d530-3768-11ea-822b-xxxxxxxxxxxx
+            default: 'Bearer {API Key}'
+          in: header
+          name: Authorization
+          description: >-
+            Get your API key from your [account
+            page](https://www.qrcode-tiger.com/data).
+          required: true
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Content-Type
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                size:
+                  type: number
+                colorDark:
+                  type: string
+                  minLength: 1
+                logo:
+                  type: string
+                  minLength: 1
+                eye_outer:
+                  type: string
+                  minLength: 1
+                eye_inner:
+                  type: string
+                  minLength: 1
+                qrData:
+                  type: string
+                  minLength: 1
+                backgroundColor:
+                  type: string
+                  minLength: 1
+                transparentBkg:
+                  type: boolean
+                qrCategory:
+                  type: string
+                  minLength: 1
+                text:
+                  type: string
+                  minLength: 1
+              required:
+                - size
+                - colorDark
+                - logo
+                - eye_outer
+                - eye_inner
+                - qrData
+                - backgroundColor
+                - transparentBkg
+                - qrCategory
+                - text
+            examples:
+              Create Static QR Code:
+                value:
+                  size: 500
+                  colorDark: 'rgb(5,64,128)'
+                  logo: scan_me.png
+                  eye_outer: eyeOuter2
+                  eye_inner: eyeInner1
+                  qrData: pattern0
+                  backgroundColor: 'rgb(255,255,255)'
+                  transparentBkg: false
+                  qrCategory: url
+                  text: 'https://qrcode-tiger.com'
+        description: ''
+      tags:
+        - Static QR Code
+  '/api/campaign/edit/{qrId}':
+    post:
+      summary: Update QR Code
+      operationId: post-api-campaign
+      parameters:
+        - schema:
+            type: string
+            default: 'Bearer {API Key}'
+            example: Bearer 29c7d530-3768-11ea-822b-xxxxxxxxxxxx
+          in: header
+          name: Authorization
+          required: true
+          description: >-
+            Get your API key from your [account
+            page](https://www.qrcode-tiger.com/data).
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Content-Type
+          required: true
+      description: Edit Dynamic QR code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                qrUrl:
+                  type: string
+                  minLength: 1
+                qrType:
+                  type: string
+                  minLength: 1
+                qrCategory:
+                  type: string
+                  minLength: 1
+                expireByIP:
+                  type: string
+                expiryDate:
+                  type: string
+                expiryScans:
+                  type: number
+                qrName:
+                  type: string
+                murlData:
+                  type: string
+                scanLoop:
+                  type: boolean
+                lock:
+                  type: boolean
+                notificationPeriod:
+                  type: string
+                  enum:
+                    - h
+                    - d
+                    - w
+                    - m
+                    - 'off'
+                googleTagManagerContainerId:
+                  type: string
+                facebookPixel:
+                  type: string
+              required:
+                - qrUrl
+                - qrType
+                - qrCategory
+            examples:
+              URL QR Code:
+                value:
+                  qr:
+                    size: 500
+                    colorDark: 'rgb(5,64,128)'
+                    logo: ''
+                    eye_outer: eyeOuter2
+                    eye_inner: eyeInner1
+                    qrData: pattern0
+                    backgroundColor: 'rgb(255,255,255)'
+                    transparentBkg: false
+                    qrCategory: url
+                    text: 'https://www.qrcode-tiger.com.com/'
+                  qrUrl: 'https://www.qrcode-tiger.com.com'
+                  qrType: qr2
+                  qrCategory: url
+              vCard QR Code:
+                value:
+                  qr:
+                    size: 500
+                    colorDark: 'rgb(5,64,128)'
+                    logo: 'https://qrtiger.com/images/1545827032075.png'
+                    eye_outer: eyeOuter0
+                    eye_inner: eyeInner0
+                    qrData: pattern0
+                    backgroundColor: 'rgb(255,255,255)'
+                    transparentBkg: false
+                    qrCategory: Vcard
+                    text: 'https://qrtiger.com/H1JG'
+                    gradient: true
+                    color01: 'rgb(5,64,128)'
+                    color02: 'rgb(243,5,5)'
+                    eye_color: true
+                    eye_color01: 'rgb(5,64,128)'
+                    eye_color02: 'rgb(243,5,5)'
+                    frame: 4
+                    frameText: SCAN ME
+                    frameColor: '#054080'
+                  qrUrl: >-
+                    {"address":{"street":"sikandra","city":"agra","state":"UP","country":"india","postal_code":"282007","location":{}},"profile_pic":"https://qrtiger.com/images/1614241984462.png","name":"ankur","company":"qrtiger","title":"dev","email":"ankurbansal0562@gmail.com","website":"https://qrcode-tiger.com","phone":{"work":"0123456789","private":"9876543210","mobile":"9638527410"},"fax":"888-888-888","additional_info":"Hi
+                    this is ankur bansal from
+                    qrtiger","bgColor":"#C03E4A","smedia":{"facebook":"https://facebook.com/qrtiger","gplus":"https://plus.google.com/qrtiger","instagram":"https://instagram.com/qrtiger","linkedin":"https://linkedin.com/qrtiger","twitter":"https://twitter.com/qrtiger","youtube":"https://youtube.com/qrtiger"}}
+                  qrType: qr2
+                  qrCategory: Vcard
+                  qrId: null
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      campaign:
+                        type: object
+                        properties:
+                          scanLoop:
+                            type: boolean
+                          bulk:
+                            type: boolean
+                          scans:
+                            type: number
+                          scanCounter:
+                            type: number
+                          _id:
+                            type: string
+                            minLength: 1
+                          qrId:
+                            type: string
+                            minLength: 1
+                          qrType:
+                            type: string
+                            minLength: 1
+                          qrCategory:
+                            type: string
+                            minLength: 1
+                          shortUrl:
+                            type: string
+                            minLength: 1
+                          redirectUrl:
+                            type: string
+                            minLength: 1
+                          murlData:
+                            type: array
+                            items:
+                              properties: {}
+                          qrName:
+                            type: string
+                            minLength: 1
+                          qrImage:
+                            type: string
+                            minLength: 1
+                          owner:
+                            type: string
+                            minLength: 1
+                          scanData:
+                            type: array
+                            items:
+                              properties: {}
+                          createdAt:
+                            type: string
+                            minLength: 1
+                          updatedAt:
+                            type: string
+                            minLength: 1
+                          __v:
+                            type: number
+                          user: {}
+                          id:
+                            type: string
+                            minLength: 1
+                        required:
+                          - scanLoop
+                          - bulk
+                          - scans
+                          - scanCounter
+                          - _id
+                          - qrId
+                          - qrType
+                          - qrCategory
+                          - shortUrl
+                          - redirectUrl
+                          - murlData
+                          - qrName
+                          - qrImage
+                          - owner
+                          - scanData
+                          - createdAt
+                          - updatedAt
+                          - __v
+                          - id
+                      city:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                city:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - city
+                            count:
+                              type: number
+                      data:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                device:
+                                  type: string
+                                  minLength: 1
+                                loc:
+                                  type: string
+                                  minLength: 1
+                                city:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - device
+                                - loc
+                                - city
+                            count:
+                              type: number
+                      country:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                loc:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - loc
+                            count:
+                              type: number
+                      device:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                device:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - device
+                            count:
+                              type: number
+                      scans:
+                        type: number
+                      unique:
+                        type: object
+                        properties:
+                          label:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - month
+                                - year
+                              properties:
+                                month:
+                                  type: string
+                                  minLength: 1
+                                year:
+                                  type: number
+                          scans:
+                            type: array
+                            items:
+                              properties: {}
+                        required:
+                          - label
+                          - scans
+                      graph:
+                        type: object
+                        properties:
+                          label:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - month
+                                - year
+                              properties:
+                                month:
+                                  type: string
+                                  minLength: 1
+                                year:
+                                  type: number
+                          scans:
+                            type: array
+                            items:
+                              properties: {}
+                        required:
+                          - label
+                          - scans
+                    required:
+                      - campaign
+                      - city
+                      - data
+                      - country
+                      - device
+                      - scans
+                      - unique
+                      - graph
+                required:
+                  - data
+              examples: {}
+      tags:
+        - Dynamic QR Code
+    parameters:
+      - schema:
+          type: string
+        name: qrId
+        in: path
+        required: true
+  '/api/campaign/delete/{qrId}':
+    post:
+      summary: Update QR Code
+      operationId: post-api-campaign
+      parameters: []
+      description: Edit Dynamic QR code
+      tags:
+        - Dynamic QR Code
+    parameters:
+      - schema:
+          type: string
+        name: qrId
+        in: path
+        required: true
+    delete:
+      summary: Delete Dynamic QR code
+      operationId: delete-api-campaign-delete-qrId
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: >-
+            Get your API key from your [account
+            page](https://www.qrcode-tiger.com/data).
+      tags:
+        - Dynamic QR Code
+  /api/campaign/:
+    post:
+      summary: Create Dynamic QR Code
+      operationId: post-api-campaign
+      parameters:
+        - schema:
+            type: string
+            default: 'Bearer {API Key}'
+            example: Bearer 29c7d530-3768-11ea-822b-xxxxxxxxxxxx
+          in: header
+          name: Authorization
+          required: true
+          description: >-
+            Get your API key from your [account
+            page](https://www.qrcode-tiger.com/data).
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Content-Type
+          required: true
+      description: Edit Dynamic QR code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                qr:
+                  type: object
+                  properties:
+                    size:
+                      type: integer
+                    colorDark:
+                      type: string
+                    logo:
+                      type: string
+                    eye_outer:
+                      type: string
+                    eye_inner:
+                      type: string
+                    qrData:
+                      type: string
+                    backgroundColor:
+                      type: string
+                    transparentBkg:
+                      type: boolean
+                    qrCategory:
+                      type: string
+                    text:
+                      type: string
+                qrUrl:
+                  type: string
+                qrType:
+                  type: string
+                qrCategory:
+                  type: string
+              x-examples:
+                example-1:
+                  qr:
+                    size: 500
+                    colorDark: 'rgb(5,64,128)'
+                    logo: ''
+                    eye_outer: eyeOuter2
+                    eye_inner: eyeInner1
+                    qrData: pattern0
+                    backgroundColor: 'rgb(255,255,255)'
+                    transparentBkg: false
+                    qrCategory: url
+                    text: 'https://www.qrcode-tiger.com.com/'
+                  qrUrl: 'https://www.qrcode-tiger.com.com'
+                  qrType: qr2
+                  qrCategory: url
+            examples:
+              URL QR Code:
+                value:
+                  qr:
+                    size: 500
+                    colorDark: 'rgb(5,64,128)'
+                    logo: ''
+                    eye_outer: eyeOuter2
+                    eye_inner: eyeInner1
+                    qrData: pattern0
+                    backgroundColor: 'rgb(255,255,255)'
+                    transparentBkg: false
+                    qrCategory: url
+                    text: 'https://www.qrcode-tiger.com.com/'
+                  qrUrl: 'https://www.qrcode-tiger.com.com'
+                  qrType: qr2
+                  qrCategory: url
+              vCard QR Code:
+                value:
+                  qr:
+                    size: 500
+                    colorDark: 'rgb(5,64,128)'
+                    logo: 'https://qrtiger.com/images/1545827032075.png'
+                    eye_outer: eyeOuter0
+                    eye_inner: eyeInner0
+                    qrData: pattern0
+                    backgroundColor: 'rgb(255,255,255)'
+                    transparentBkg: false
+                    qrCategory: Vcard
+                    text: 'https://qrtiger.com/H1JG'
+                    gradient: true
+                    color01: 'rgb(5,64,128)'
+                    color02: 'rgb(243,5,5)'
+                    eye_color: true
+                    eye_color01: 'rgb(5,64,128)'
+                    eye_color02: 'rgb(243,5,5)'
+                    frame: 4
+                    frameText: SCAN ME
+                    frameColor: '#054080'
+                  qrUrl: >-
+                    {"address":{"street":"sikandra","city":"agra","state":"UP","country":"india","postal_code":"282007","location":{}},"profile_pic":"https://qrtiger.com/images/1614241984462.png","name":"ankur","company":"qrtiger","title":"dev","email":"ankurbansal0562@gmail.com","website":"https://qrcode-tiger.com","phone":{"work":"0123456789","private":"9876543210","mobile":"9638527410"},"fax":"888-888-888","additional_info":"Hi
+                    this is ankur bansal from
+                    qrtiger","bgColor":"#C03E4A","smedia":{"facebook":"https://facebook.com/qrtiger","gplus":"https://plus.google.com/qrtiger","instagram":"https://instagram.com/qrtiger","linkedin":"https://linkedin.com/qrtiger","twitter":"https://twitter.com/qrtiger","youtube":"https://youtube.com/qrtiger"}}
+                  qrType: qr2
+                  qrCategory: Vcard
+                  qrId: null
+        description: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      campaign:
+                        type: object
+                        properties:
+                          scanLoop:
+                            type: boolean
+                          bulk:
+                            type: boolean
+                          scans:
+                            type: number
+                          scanCounter:
+                            type: number
+                          _id:
+                            type: string
+                            minLength: 1
+                          qrId:
+                            type: string
+                            minLength: 1
+                          qrType:
+                            type: string
+                            minLength: 1
+                          qrCategory:
+                            type: string
+                            minLength: 1
+                          shortUrl:
+                            type: string
+                            minLength: 1
+                          redirectUrl:
+                            type: string
+                            minLength: 1
+                          murlData:
+                            type: array
+                            items:
+                              properties: {}
+                          qrName:
+                            type: string
+                            minLength: 1
+                          qrImage:
+                            type: string
+                            minLength: 1
+                          owner:
+                            type: string
+                            minLength: 1
+                          scanData:
+                            type: array
+                            items:
+                              properties: {}
+                          createdAt:
+                            type: string
+                            minLength: 1
+                          updatedAt:
+                            type: string
+                            minLength: 1
+                          __v:
+                            type: number
+                          user: {}
+                          id:
+                            type: string
+                            minLength: 1
+                        required:
+                          - scanLoop
+                          - bulk
+                          - scans
+                          - scanCounter
+                          - _id
+                          - qrId
+                          - qrType
+                          - qrCategory
+                          - shortUrl
+                          - redirectUrl
+                          - murlData
+                          - qrName
+                          - qrImage
+                          - owner
+                          - scanData
+                          - createdAt
+                          - updatedAt
+                          - __v
+                          - id
+                      city:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                city:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - city
+                            count:
+                              type: number
+                      data:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                device:
+                                  type: string
+                                  minLength: 1
+                                loc:
+                                  type: string
+                                  minLength: 1
+                                city:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - device
+                                - loc
+                                - city
+                            count:
+                              type: number
+                      country:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                loc:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - loc
+                            count:
+                              type: number
+                      device:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                device:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - device
+                            count:
+                              type: number
+                      scans:
+                        type: number
+                      unique:
+                        type: object
+                        properties:
+                          label:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - month
+                                - year
+                              properties:
+                                month:
+                                  type: string
+                                  minLength: 1
+                                year:
+                                  type: number
+                          scans:
+                            type: array
+                            items:
+                              properties: {}
+                        required:
+                          - label
+                          - scans
+                      graph:
+                        type: object
+                        properties:
+                          label:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - month
+                                - year
+                              properties:
+                                month:
+                                  type: string
+                                  minLength: 1
+                                year:
+                                  type: number
+                          scans:
+                            type: array
+                            items:
+                              properties: {}
+                        required:
+                          - label
+                          - scans
+                    required:
+                      - campaign
+                      - city
+                      - data
+                      - country
+                      - device
+                      - scans
+                      - unique
+                      - graph
+                required:
+                  - data
+              examples: {}
+      tags:
+        - Dynamic QR Code
+    parameters: []
+  /accounts/uploads/:
+    post:
+      summary: Upload Logo
+      tags:
+        - Upload Logo
+      responses: {}
+      operationId: post-accounts-uploads
+      parameters:
+        - schema:
+            type: string
+            example: Bearer 29c7d530-3768-11ea-822b-xxxxxxxxxxxx
+            default: 'Bearer {API Key}'
+          in: header
+          name: Authorization
+          description: Bearer token
+        - schema:
+            type: string
+            default: multipart/form-data
+            example: multipart/form-data
+          in: header
+          name: Content-Type
+          description: multipart/form-data
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: 'null'
+            examples: {}
+        description: ''
+      description: >-
+        To try this endpoint, upload a file in "binary" tab, and then make sure
+        you are sending the file in the "userFile" param.
+  '/data/{qrid}':
+    get:
+      summary: Track data
+      tags:
+        - Track Data
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      campaign:
+                        type: object
+                        properties:
+                          lock:
+                            type: object
+                            properties:
+                              active:
+                                type: boolean
+                            required:
+                              - active
+                          archive:
+                            type: boolean
+                          bulk:
+                            type: boolean
+                          scans:
+                            type: number
+                          scanCounter:
+                            type: number
+                          scanLoop:
+                            type: boolean
+                          expiryDate: {}
+                          expiryScans: {}
+                          _id:
+                            type: string
+                            minLength: 1
+                          qrId:
+                            type: string
+                            minLength: 1
+                          qrType:
+                            type: string
+                            minLength: 1
+                          qrCategory:
+                            type: string
+                            minLength: 1
+                          shortUrl:
+                            type: string
+                            minLength: 1
+                          redirectUrl:
+                            type: string
+                            minLength: 1
+                          murlData:
+                            type: array
+                            items:
+                              required: []
+                              properties: {}
+                          qrName:
+                            type: string
+                            minLength: 1
+                          qrImage:
+                            type: string
+                            minLength: 1
+                          owner:
+                            type: string
+                            minLength: 1
+                          subUserId: {}
+                          scanData:
+                            type: array
+                            items:
+                              required: []
+                              properties: {}
+                          createdAt:
+                            type: string
+                            minLength: 1
+                          updatedAt:
+                            type: string
+                            minLength: 1
+                          __v:
+                            type: number
+                          user: {}
+                          createdBy: {}
+                          id:
+                            type: string
+                            minLength: 1
+                        required:
+                          - lock
+                          - archive
+                          - bulk
+                          - scans
+                          - scanCounter
+                          - scanLoop
+                          - _id
+                          - qrId
+                          - qrType
+                          - qrCategory
+                          - shortUrl
+                          - redirectUrl
+                          - murlData
+                          - qrName
+                          - qrImage
+                          - owner
+                          - scanData
+                          - createdAt
+                          - updatedAt
+                          - __v
+                          - id
+                      graph:
+                        type: object
+                        properties:
+                          label:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required: []
+                              properties:
+                                year: {}
+                          scans:
+                            type: array
+                            items:
+                              required: []
+                              properties: {}
+                        required:
+                          - label
+                          - scans
+                      data:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                device:
+                                  type: string
+                                  minLength: 1
+                                loc:
+                                  type: string
+                                  minLength: 1
+                                city:
+                                  type: string
+                              required:
+                                - device
+                                - loc
+                                - city
+                            count:
+                              type: number
+                      city:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                city:
+                                  type: string
+                              required:
+                                - city
+                            count:
+                              type: number
+                      scans:
+                        type: number
+                      device:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                device:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - device
+                            count:
+                              type: number
+                      unique:
+                        type: object
+                        properties:
+                          label:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required: []
+                              properties:
+                                year: {}
+                          scans:
+                            type: array
+                            items:
+                              required: []
+                              properties: {}
+                        required:
+                          - label
+                          - scans
+                      country:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - count
+                          properties:
+                            _id:
+                              type: object
+                              properties:
+                                loc:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - loc
+                            count:
+                              type: number
+                    required:
+                      - campaign
+                      - graph
+                      - data
+                      - city
+                      - scans
+                      - device
+                      - unique
+                      - country
+                required:
+                  - data
+                x-examples:
+                  example-1:
+                    data:
+                      campaign:
+                        lock:
+                          active: false
+                        archive: false
+                        bulk: false
+                        scans: 2
+                        scanCounter: 0
+                        scanLoop: false
+                        expiryDate: null
+                        expiryScans: null
+                        _id: 61adb7353fa78f337712104a
+                        qrId: OL0Q
+                        qrType: qr2
+                        qrCategory: url
+                        shortUrl: 'https://qr1.be/OL0Q'
+                        redirectUrl: 'http://qrcode-tiger.com'
+                        murlData: []
+                        qrName: Campaign OL0Q
+                        qrImage: 'https://qrtiger.com/qr/OL0Q.png'
+                        owner: 5e1ebe5673624e252f3d2ea1
+                        subUserId: null
+                        scanData: []
+                        createdAt: '2021-12-06T07:09:41.315Z'
+                        updatedAt: '2021-12-06T07:11:21.923Z'
+                        __v: 0
+                        user: null
+                        createdBy: null
+                        id: 61adb7353fa78f337712104a
+                      graph:
+                        label:
+                          - year: null
+                        scans:
+                          - 2
+                      data:
+                        - _id:
+                            device: iOS
+                            loc: PH
+                            city: ''
+                          count: 2
+                      city:
+                        - _id:
+                            city: ''
+                          count: 2
+                      scans: 2
+                      device:
+                        - _id:
+                            device: iOS
+                          count: 2
+                      unique:
+                        label:
+                          - year: null
+                        scans:
+                          - 1
+                      country:
+                        - _id:
+                            loc: PH
+                          count: 2
+              examples: {}
+      operationId: 'get-data-:qrid?period=month&tz=Asia-Singapore'
+      description: ''
+      parameters:
+        - schema:
+            type: string
+            example: Bearer your-api-key
+            default: Bearer your-api-key
+          in: header
+          name: Authorization
+        - schema:
+            type: string
+            enum:
+              - day
+              - week
+              - month
+              - months
+              - year
+              - years
+              - custom
+            example: month
+            default: month
+          in: query
+          name: period
+          required: true
+        - schema:
+            type: boolean
+            default: 'false'
+          in: query
+          name: export
+        - schema:
+            type: string
+            default: Asia/Singapore
+            example: Asia/Singapore
+          in: query
+          name: tz
+          required: true
+        - schema:
+            type: number
+          in: query
+          name: timestamp
+          description: >-
+            If day period is selected, pass the unix timestamp of day you would
+            like to query 
+        - schema:
+            type: string
+          in: query
+          name: endTimestamp
+          description: Used for `custom` period
+    parameters:
+      - schema:
+          type: string
+        name: qrid
+        in: path
+        required: true
+  /bulk/:
+    get:
+      summary: Get bulk QR campaign data
+      tags:
+        - Bulk
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  query:
+                    type: object
+                    properties:
+                      limit:
+                        type: number
+                      page:
+                        type: number
+                      total:
+                        type: number
+                    required:
+                      - limit
+                      - page
+                      - total
+                  data:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - scans
+                        - archive
+                        - _id
+                        - bulkName
+                        - bulkId
+                        - tsvName
+                        - owner
+                        - zipName
+                        - zipSvgName
+                        - zipUrl
+                        - zipSvgUrl
+                        - bulkImage
+                        - bulkFormat
+                        - createdAt
+                        - updatedAt
+                        - __v
+                        - id
+                      properties:
+                        scans:
+                          type: number
+                        archive:
+                          type: boolean
+                        _id:
+                          type: string
+                          minLength: 1
+                        bulkName:
+                          type: string
+                          minLength: 1
+                        bulkId:
+                          type: string
+                          minLength: 1
+                        tsvName:
+                          type: string
+                          minLength: 1
+                        owner:
+                          type: string
+                          minLength: 1
+                        zipName:
+                          type: string
+                          minLength: 1
+                        zipSvgName:
+                          type: string
+                          minLength: 1
+                        zipUrl:
+                          type: string
+                          minLength: 1
+                        zipSvgUrl:
+                          type: string
+                          minLength: 1
+                        bulkImage:
+                          type: string
+                          minLength: 1
+                        bulkFormat:
+                          type: string
+                          minLength: 1
+                        createdAt:
+                          type: string
+                          minLength: 1
+                        updatedAt:
+                          type: string
+                          minLength: 1
+                        __v:
+                          type: number
+                        QRs: {}
+                        id:
+                          type: string
+                          minLength: 1
+                required:
+                  - query
+                  - data
+                x-examples:
+                  example-1:
+                    query:
+                      limit: 5
+                      page: 1
+                      total: 99
+                    data:
+                      - scans: 0
+                        archive: false
+                        _id: 61ace005279e6c788a69e431
+                        bulkName: Bulk-T9G-MF2
+                        bulkId: T9G-MF2
+                        tsvName: template-445.csv
+                        owner: 5e1ebe5673624e252f3d2ea1
+                        zipName: T9G-MF2-png.zip
+                        zipSvgName: T9G-MF2-svg.zip
+                        zipUrl: 'https://qrtiger.com/zip/T9G-MF2-png.zip'
+                        zipSvgUrl: 'https://qrtiger.com/zip/T9G-MF2-svg.zip'
+                        bulkImage: 'https://qrtiger.com/bulk/T9G-MF2.png'
+                        bulkFormat: dynamic
+                        createdAt: '2021-12-05T15:51:33.523Z'
+                        updatedAt: '2021-12-05T15:51:33.523Z'
+                        __v: 0
+                        QRs: null
+                        id: 61ace005279e6c788a69e431
+                      - scans: 0
+                        archive: false
+                        _id: 61922f545678f95c6a7b71c3
+                        bulkName: Bulk-4ML-ACU
+                        bulkId: 4ML-ACU
+                        tsvName: ''
+                        owner: 5e1ebe5673624e252f3d2ea1
+                        zipName: 4ML-ACU-png.zip
+                        zipSvgName: 4ML-ACU-svg.zip
+                        zipUrl: 'https://qrtiger.com/zip/4ML-ACU-png.zip'
+                        zipSvgUrl: 'https://qrtiger.com/zip/4ML-ACU-svg.zip'
+                        bulkImage: 'https://qrtiger.com/bulk/4ML-ACU.png'
+                        bulkFormat: dynamic
+                        createdAt: '2021-11-15T09:58:44.968Z'
+                        updatedAt: '2021-11-15T09:58:44.968Z'
+                        __v: 0
+                        QRs: null
+                        id: 61922f545678f95c6a7b71c3
+                      - scans: 0
+                        archive: false
+                        _id: 6180f2688350406aff353ede
+                        bulkName: Bulk-ZP0-FCX
+                        bulkId: ZP0-FCX
+                        tsvName: template-376.csv
+                        owner: 5e1ebe5673624e252f3d2ea1
+                        zipName: ZP0-FCX-png.zip
+                        zipSvgName: ZP0-FCX-svg.zip
+                        zipUrl: 'https://qrtiger.com/zip/ZP0-FCX-png.zip'
+                        zipSvgUrl: 'https://qrtiger.com/zip/ZP0-FCX-svg.zip'
+                        bulkImage: 'https://qrtiger.com/bulk/ZP0-FCX.png'
+                        bulkFormat: dynamic
+                        createdAt: '2021-11-02T08:10:16.359Z'
+                        updatedAt: '2021-11-02T08:10:16.359Z'
+                        __v: 0
+                        QRs: null
+                        id: 6180f2688350406aff353ede
+                      - scans: 0
+                        archive: false
+                        _id: 614ad7f73f4495409321b91a
+                        bulkName: Bulk-Static-3UB-PTL
+                        bulkId: 3UB-PTL
+                        owner: 5e1ebe5673624e252f3d2ea1
+                        zipName: 3UB-PTL-png.zip
+                        zipSvgName: 3UB-PTL-svg.zip
+                        zipUrl: 'https://qrtiger.com/zip/3UB-PTL-png.zip'
+                        zipSvgUrl: 'https://qrtiger.com/zip/3UB-PTL-svg.zip'
+                        bulkImage: 'https://qrtiger.com/bulk/3UB-PTL.png'
+                        bulkFormat: static
+                        createdAt: '2021-09-22T07:15:03.550Z'
+                        updatedAt: '2021-09-22T07:15:03.550Z'
+                        __v: 0
+                        QRs: null
+                        id: 614ad7f73f4495409321b91a
+                      - scans: 0
+                        archive: false
+                        _id: 614071254cc14562f28b6e99
+                        bulkName: Bulk-Static-KJQ-XBZ
+                        bulkId: KJQ-XBZ
+                        owner: 5e1ebe5673624e252f3d2ea1
+                        zipName: KJQ-XBZ-png.zip
+                        zipSvgName: KJQ-XBZ-svg.zip
+                        zipUrl: 'https://qrtiger.com/zip/KJQ-XBZ-png.zip'
+                        zipSvgUrl: 'https://qrtiger.com/zip/KJQ-XBZ-svg.zip'
+                        bulkImage: 'https://qrtiger.com/bulk/KJQ-XBZ.png'
+                        bulkFormat: static
+                        createdAt: '2021-09-14T09:53:41.079Z'
+                        updatedAt: '2021-09-14T09:53:41.079Z'
+                        __v: 0
+                        QRs: null
+                        id: 614071254cc14562f28b6e99
+      operationId: get-bulk
+      parameters:
+        - schema:
+            type: number
+            example: 5
+            default: 5
+          in: query
+          name: limit
+        - schema:
+            type: number
+            default: 1
+            example: 1
+          in: query
+          name: page
+        - schema:
+            type: string
+            default: Bearer your-api-key
+            example: Bearer your-api-key
+          in: header
+          name: Authorization
+    parameters: []
+    post:
+      summary: Create QR in Bulk (From CSV)
+      operationId: post-bulk
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  zipUrl:
+                    type: string
+                x-examples:
+                  example-1:
+                    zipUrl: 'https://qrtiger.com/zip/54E-I6H-png.zip'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                qr:
+                  type: object
+                  properties:
+                    size:
+                      type: integer
+                    colorDark:
+                      type: string
+                    logo:
+                      type: 'null'
+                    eye_outer:
+                      type: string
+                    eye_inner:
+                      type: string
+                    qrData:
+                      type: string
+                    backgroundColor:
+                      type: string
+                    transparentBkg:
+                      type: boolean
+                    qrCategory:
+                      type: string
+                    text:
+                      type: string
+                tsvStatus:
+                  type: boolean
+                tsvName:
+                  type: string
+                data:
+                  type: object
+                  properties: {}
+                zipFormat:
+                  type: string
+              x-examples:
+                example-1:
+                  qr:
+                    size: 500
+                    colorDark: 'rgb(5,64,128)'
+                    logo: null
+                    eye_outer: eyeOuter2
+                    eye_inner: eyeInner1
+                    qrData: pattern1
+                    backgroundColor: 'rgb(255,255,255)'
+                    transparentBkg: false
+                    qrCategory: url
+                    text: 'https://www.qrcode-tiger.com'
+                  tsvStatus: true
+                  tsvName: no-frame-text-template-(1)-32.csv
+                  data: {}
+                  zipFormat: png
+      tags:
+        - Bulk
+  /bulk/campaign/:
+    get:
+      summary: Get bulk campaign QRs
+      tags:
+        - Bulk
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  query:
+                    type: object
+                    properties:
+                      limit:
+                        type: number
+                      page:
+                        type: number
+                      total:
+                        type: number
+                    required:
+                      - limit
+                      - page
+                      - total
+                  data:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - archive
+                        - bulk
+                        - scans
+                        - scanCounter
+                        - scanLoop
+                        - _id
+                        - qrId
+                        - qrType
+                        - qrCategory
+                        - shortUrl
+                        - redirectUrl
+                        - qrName
+                        - qrImage
+                        - owner
+                        - bulkId
+                        - createdAt
+                        - updatedAt
+                        - __v
+                        - id
+                      properties:
+                        lock:
+                          type: object
+                          properties:
+                            active:
+                              type: boolean
+                          required:
+                            - active
+                        archive:
+                          type: boolean
+                        bulk:
+                          type: boolean
+                        scans:
+                          type: number
+                        scanCounter:
+                          type: number
+                        scanLoop:
+                          type: boolean
+                        expiryDate: {}
+                        expiryScans: {}
+                        _id:
+                          type: string
+                          minLength: 1
+                        qrId:
+                          type: string
+                          minLength: 1
+                        qrType:
+                          type: string
+                          minLength: 1
+                        qrCategory:
+                          type: string
+                          minLength: 1
+                        shortUrl:
+                          type: string
+                          minLength: 1
+                        redirectUrl:
+                          type: string
+                          minLength: 1
+                        qrName:
+                          type: string
+                          minLength: 1
+                        qrImage:
+                          type: string
+                          minLength: 1
+                        owner:
+                          type: string
+                          minLength: 1
+                        bulkId:
+                          type: string
+                          minLength: 1
+                        murlData:
+                          type: array
+                          items:
+                            required: []
+                            properties: {}
+                        scanData:
+                          type: array
+                          items:
+                            required: []
+                            properties: {}
+                        createdAt:
+                          type: string
+                          minLength: 1
+                        updatedAt:
+                          type: string
+                          minLength: 1
+                        __v:
+                          type: number
+                        user: {}
+                        createdBy: {}
+                        id:
+                          type: string
+                          minLength: 1
+                required:
+                  - query
+                  - data
+                x-examples:
+                  example-1:
+                    query:
+                      limit: 5
+                      page: 1
+                      total: 3
+                    data:
+                      - lock:
+                          active: false
+                        archive: false
+                        bulk: true
+                        scans: 0
+                        scanCounter: 0
+                        scanLoop: false
+                        expiryDate: null
+                        expiryScans: null
+                        _id: 61ace006279e6c788a69e434
+                        qrId: FQXHQ
+                        qrType: qr2
+                        qrCategory: url
+                        shortUrl: 'https://qr1.be/FQXHQ'
+                        redirectUrl: 'https://qrcode-tiger.com'
+                        qrName: 0003-T9G-MF2-FQXHQ
+                        qrImage: 'https://qrtiger.com/qr/0003-T9G-MF2-FQXHQ.png'
+                        owner: 5e1ebe5673624e252f3d2ea1
+                        bulkId: T9G-MF2
+                        murlData: []
+                        scanData: []
+                        createdAt: '2021-12-05T15:51:34.483Z'
+                        updatedAt: '2021-12-05T15:51:34.483Z'
+                        __v: 0
+                        user: null
+                        createdBy: null
+                        id: 61ace006279e6c788a69e434
+                      - lock:
+                          active: false
+                        archive: false
+                        bulk: true
+                        scans: 0
+                        scanCounter: 0
+                        scanLoop: false
+                        expiryDate: null
+                        expiryScans: null
+                        _id: 61ace006279e6c788a69e432
+                        qrId: KVQOO
+                        qrType: qr2
+                        qrCategory: url
+                        shortUrl: 'https://qr1.be/KVQOO'
+                        redirectUrl: 'https://www.apple.com'
+                        qrName: 0001-T9G-MF2-KVQOO
+                        qrImage: 'https://qrtiger.com/qr/0001-T9G-MF2-KVQOO.png'
+                        owner: 5e1ebe5673624e252f3d2ea1
+                        bulkId: T9G-MF2
+                        murlData: []
+                        scanData: []
+                        createdAt: '2021-12-05T15:51:34.483Z'
+                        updatedAt: '2021-12-05T15:51:34.483Z'
+                        __v: 0
+                        user: null
+                        createdBy: null
+                        id: 61ace006279e6c788a69e432
+                      - lock:
+                          active: false
+                        archive: false
+                        bulk: true
+                        scans: 0
+                        scanCounter: 0
+                        scanLoop: false
+                        expiryDate: null
+                        expiryScans: null
+                        _id: 61ace006279e6c788a69e433
+                        qrId: RIOIY
+                        qrType: qr2
+                        qrCategory: url
+                        shortUrl: 'https://qr1.be/RIOIY'
+                        redirectUrl: 'https://designboom.com'
+                        qrName: 0002-T9G-MF2-RIOIY
+                        qrImage: 'https://qrtiger.com/qr/0002-T9G-MF2-RIOIY.png'
+                        owner: 5e1ebe5673624e252f3d2ea1
+                        bulkId: T9G-MF2
+                        murlData: []
+                        scanData: []
+                        createdAt: '2021-12-05T15:51:34.483Z'
+                        updatedAt: '2021-12-05T15:51:34.483Z'
+                        __v: 0
+                        user: null
+                        createdBy: null
+                        id: 61ace006279e6c788a69e433
+      operationId: get-bulk-campaign
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: page
+        - schema:
+            type: number
+          in: query
+          name: limit
+        - schema:
+            type: string
+          in: query
+          name: bulkId
+        - schema:
+            type: string
+            example: Bearer your-api-key
+            default: Bearer your-api-key
+          in: header
+          name: Authorization
+          required: true
+      description: ''
+  /accounts/static/csv:
+    post:
+      summary: Upload CSV file
+      operationId: post-accounts-static-csv
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                userFile:
+                  type: string
+        description: ''
+      tags:
+        - Bulk
+components:
+  schemas: {}
+  securitySchemes: {}
+tags:
+  - name: Dynamic QR Code
+  - name: Static QR Code
